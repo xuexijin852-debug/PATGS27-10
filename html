@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>港北合格 コマンドセンター</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #334155;
+  --ink: #f8fafc;
+  --ink-muted: #94a3b8;
+  --accent: #f59e0b;
+  --accent-weak: rgba(245,158,11,0.12);
+  --danger: #ef4444;
+  --danger-weak: rgba(239,68,68,0.12);
+  --success: #22c55e;
+  --success-weak: rgba(34,197,94,0.12);
+  --info: #3b82f6;
+  --info-weak: rgba(59,130,246,0.12);
+  --line: rgba(148,163,184,0.15);
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  --step-0: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
+  --step-1: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+  --step-2: clamp(1.3rem, 1.1rem + 1vw, 1.75rem);
+  --step-3: clamp(1.8rem, 1.4rem + 2vw, 2.75rem);
+  --step-4: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
+  --space: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Inter", "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: var(--step-0);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+.container { max-width: 900px; margin: 0 auto; padding: var(--space); }
+
+/* Header */
+header {
+  text-align: center;
+  padding: calc(var(--space)*2) 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: calc(var(--space)*1.5);
+}
+header h1 {
+  font-size: var(--step-3);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+header .subtitle {
+  color: var(--ink-muted);
+  font-size: var(--step-0);
+  margin-top: 0.5rem;
+}
+
+/* Countdown Hero */
+.countdown-hero {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*1.5);
+  text-align: center;
+  margin-bottom: calc(var(--space)*1.5);
+  box-shadow: var(--shadow);
+}
+.countdown-hero .label {
+  color: var(--ink-muted);
+  font-size: var(--step-0);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+.countdown-hero .days {
+  font-size: var(--step-4);
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.countdown-hero .days-label {
+  color: var(--ink-muted);
+  font-size: var(--step-1);
+  margin-top: 0.25rem;
+}
+.countdown-hero .detail {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.countdown-hero .detail-item {
+  text-align: center;
+}
+.countdown-hero .detail-item .num {
+  font-size: var(--step-2);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+}
+.countdown-hero .detail-item .unit {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*1.2);
+  margin-bottom: calc(var(--space)*1);
+  box-shadow: var(--shadow);
+}
+.card h2 {
+  font-size: var(--step-2);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card h3 {
+  font-size: var(--step-1);
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+/* Status Grid */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: calc(var(--space)*1.5);
+}
+.status-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.status-box .num {
+  font-size: var(--step-3);
+  font-weight: 900;
+  line-height: 1;
+}
+.status-box .label {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-top: 0.4rem;
+}
+.status-box.accent { border-top: 3px solid var(--accent); }
+.status-box.danger { border-top: 3px solid var(--danger); }
+.status-box.success { border-top: 3px solid var(--success); }
+.status-box.info { border-top: 3px solid var(--info); }
+.status-box.accent .num { color: var(--accent); }
+.status-box.danger .num { color: var(--danger); }
+.status-box.success .num { color: var(--success); }
+.status-box.info .num { color: var(--info); }
+
+/* Progress Bar */
+.progress-wrap {
+  margin: 1rem 0;
+}
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+.progress-bar {
+  height: 12px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress-bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #f97316);
+  border-radius: 6px;
+  transition: width 0.8s ease;
+}
+
+/* Today's Menu */
+.menu-list {
+  list-style: none;
+}
+.menu-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.menu-list li:last-child { border-bottom: none; }
+.menu-list .check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--surface-2);
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: transparent;
+  transition: all 0.2s;
+}
+.menu-list li.done .check {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+.menu-list li.done .text {
+  text-decoration: line-through;
+  color: var(--ink-muted);
+}
+.menu-list .text { flex: 1; }
+.menu-list .badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.badge-math { background: var(--info-weak); color: var(--info); }
+.badge-eng { background: var(--success-weak); color: var(--success); }
+.badge-jap { background: var(--accent-weak); color: var(--accent); }
+.badge-sci { background: #a855f715; color: #a855f7; }
+.badge-soc { background: #ec489915; color: #ec4899; }
+.badge-diag { background: var(--danger-weak); color: var(--danger); }
+
+/* Unit Table */
+.unit-table-wrap { overflow-x: auto; }
+.unit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+.unit-table th, .unit-table td {
+  padding: 0.5rem 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.unit-table th {
+  color: var(--ink-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.unit-table tr:hover { background: rgba(255,255,255,0.03); }
+.unit-table .status-select {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.25rem 0.4rem;
+  font-size: 0.8rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #f97316);
+  color: #1f1b16;
+}
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn-secondary:hover { background: var(--line); }
+
+/* Notification */
+.notify-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: var(--info-weak);
+  border: 1px solid var(--info);
+  border-radius: var(--radius);
+  margin-bottom: calc(var(--space)*1);
+}
+.notify-bar.enabled {
+  background: var(--success-weak);
+  border-color: var(--success);
+}
+
+/* Collapse */
+.collapse-btn {
+  width: 100%;
+  text-align: left;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  color: var(--ink);
+  font-size: var(--step-1);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.collapse-btn:hover { background: var(--line); }
+.collapse-content {
+  display: none;
+  padding-bottom: 1rem;
+}
+.collapse-content.open { display: block; }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: calc(var(--space)*2) 0;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  border-top: 1px solid var(--line);
+  margin-top: calc(var(--space)*2);
+}
+
+/* Print */
+@media print {
+  body { background: #fff; color: #000; }
+  .no-print { display: none !important; }
+  .card, .status-box, .countdown-hero {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+}
+@page { size: A4; margin: 15mm; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>港北合格 コマンドセンター</h1>
+  <p class="subtitle">PATGS27 学習法ダッシュボード</p>
+</header>
+
+<!-- Countdown -->
+<div class="countdown-hero">
+  <div class="label">神奈川県立港北高等学校 学力検査まで</div>
+  <div class="days" id="countdown-days">--</div>
+  <div class="days-label">日</div>
+  <div class="detail">
+    <div class="detail-item"><div class="num" id="countdown-h">--</div><div class="unit">時間</div></div>
+    <div class="detail-item"><div class="num" id="countdown-m">--</div><div class="unit">分</div></div>
+    <div class="detail-item"><div class="num" id="countdown-s">--</div><div class="unit">秒</div></div>
+  </div>
+</div>
+
+<!-- Status Grid -->
+<div class="status-grid">
+  <div class="status-box danger">
+    <div class="num" id="status-gap">49</div>
+    <div class="label">合格までの差（点）</div>
+  </div>
+  <div class="status-box accent">
+    <div class="num" id="status-mastered">0</div>
+    <div class="label">習得済み単元</div>
+  </div>
+  <div class="status-box info">
+    <div class="num" id="status-total">69</div>
+    <div class="label">総単元数</div>
+  </div>
+  <div class="status-box success">
+    <div class="num" id="status-rate">0%</div>
+    <div class="label">進捗率</div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="card">
+  <h2>習得進捗</h2>
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span>習得済み / 目標</span>
+      <span id="progress-text">0 / 55</span>
+    </div>
+    <div class="progress-bar"><div class="fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+  <p style="color:var(--ink-muted);font-size:0.85rem;margin-top:0.5rem;">
+    2/14目標: 55単元習得済み。入試までに診断・再現を除く58単元が最終目標。
+  </p>
+</div>
+
+<!-- Today's Menu -->
+<div class="card">
+  <h2>今日のメニュー <span style="font-size:0.7em;color:var(--ink-muted);font-weight:400;">(<span id="today-date"></span>)</span></h2>
+  <ul class="menu-list" id="today-menu">
+    <!-- JS fills this -->
+  </ul>
+  <div style="margin-top:1rem;display:flex;gap:0.5rem;" class="no-print">
+    <button class="btn btn-secondary" onclick="resetToday()">今日の進捗をリセット</button>
+    <button class="btn btn-primary" onclick="saveProgress()">進捗を保存</button>
+  </div>
+</div>
+
+<!-- Weekly Plan -->
+<div class="card">
+  <h2>今週のテーマ（11/23〜11/29）</h2>
+  <div class="unit-table-wrap">
+    <table class="unit-table">
+      <thead><tr><th>優先</th><th>単元</th><th>教科</th><th>コマ</th><th>狙う点</th><th>状態</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>J1 資料読解・記述</td><td>国語</td><td>A=3</td><td>+5</td><td id="wp-J1">未着手</td></tr>
+        <tr><td>2</td><td>M1 分数の加減</td><td>数学</td><td>A=3</td><td>+4</td><td id="wp-M1">未着手</td></tr>
+        <tr><td>3</td><td>M2 因数分解</td><td>数学</td><td>A=3</td><td>+3</td><td id="wp-M2">未着手</td></tr>
+        <tr><td>4</td><td>E1 現在完了</td><td>英語</td><td>A=3</td><td>+3</td><td id="wp-E1">未着手</td></tr>
+        <tr><td>5</td><td>E11 受け身・比較</td><td>英語</td><td>診断=1</td><td>診断</td><td id="wp-E11">未着手</td></tr>
+        <tr><td>6</td><td>J7 短歌・俳句</td><td>国語</td><td>診断=1</td><td>診断</td><td id="wp-J7">未着手</td></tr>
+        <tr><td>7</td><td>C2 政治</td><td>社会</td><td>診断=1</td><td>診断</td><td id="wp-C2">未着手</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="color:var(--ink-muted);font-size:0.85rem;margin-top:0.75rem;">
+    毎日の習慣: J4漢字(5分) / J5語句・熟語(5分) / J6文法(5分)
+  </p>
+</div>
+
+<!-- Milestones -->
+<div class="card">
+  <h2>今後のマイルストーン</h2>
+  <div class="unit-table-wrap">
+    <table class="unit-table">
+      <thead><tr><th>日付</th><th>イベト</th><th>備考</th></tr></thead>
+      <tbody>
+        <tr><td>11/29(日)</td><td>入試全範囲トライアル</td><td>模試。48時間以内に誤答ログ登録</td></tr>
+        <tr><td>12/6頃</td><td>過去問(数・英)初回診断</td><td>週間予定W1完了時点</td></tr>
+        <tr><td>12/13(日)</td><td>第6回模試</td><td>中間目標チェック</td></tr>
+        <tr><td>12/24</td><td>習得済み12単元目標</td><td>併願の話し合いを済ませる</td></tr>
+        <tr><td>1/10(日)</td><td>全範囲模試</td><td>差の確認目安約18点</td></tr>
+        <tr><td>1/31</td><td>最終着手期限(維持確認)</td><td>2週間後の維持確認まで済ませる</td></tr>
+        <tr><td>2/7</td><td>最終着手期限(習得判定)</td><td>これ以降は新規単元を始めない</td></tr>
+        <tr><td style="color:var(--accent);font-weight:700;">2/16(月)</td><td style="color:var(--accent);font-weight:700;">学力検査</td><td style="color:var(--accent);font-weight:700;">本番</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="card no-print">
+  <h2>通知設定</h2>
+  <div class="notify-bar" id="notify-bar">
+    <span>ブラウザ通知:</span>
+    <button class="btn btn-primary" id="notify-btn" onclick="toggleNotify()">通知を許可する</button>
+    <span id="notify-status" style="font-size:0.85rem;color:var(--ink-muted);">未許可</span>
+  </div>
+  <p style="color:var(--ink-muted);font-size:0.8rem;">
+    毎時0分に「今何をやるべきか」を通知します。スマホの場合はホーム画面に追加するとアプリのように使えます。
+  </p>
+</div>
+
+<!-- All Units -->
+<div class="card">
+  <button class="collapse-btn" onclick="toggleCollapse('all-units')">
+    69単元一覧 <span id="unit-toggle-icon">▼</span>
+  </button>
+  <div class="collapse-content" id="all-units">
+    <div class="unit-table-wrap">
+      <table class="unit-table" id="full-unit-table">
+        <thead><tr><th>ID</th><th>単元</th><th>教科</th><th>優先</th><th>着手週</th><th>状態</th></tr></thead>
+        <tbody><!-- JS fills --></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  PATGS27 Command Center | データはブラウザに保存されます（ローカルストレージ）
+</footer>
+
+</div>
+
+<script>
+// ===================== DATA =====================
+const examDate = new Date("2027-02-16T09:00:00+09:00");
+
+const units = [
+  {id:"M1",name:"分数の加減",subj:"数学",prio:"A",week:1},
+  {id:"M2",name:"因数分解",subj:"数学",prio:"A",week:1},
+  {id:"M3",name:"平方根",subj:"数学",prio:"B",week:2},
+  {id:"M4",name:"方程式の利用",subj:"数学",prio:"A",week:2},
+  {id:"M5",name:"二次関数:変域",subj:"数学",prio:"A",week:3},
+  {id:"M6",name:"二次関数:変化の割合・係数",subj:"数学",prio:"A",week:4},
+  {id:"M7",name:"二次関数:2点・面積",subj:"数学",prio:"A",week:5},
+  {id:"M8",name:"一次関数",subj:"数学",prio:"B",week:6},
+  {id:"M9",name:"平面図形:相似",subj:"数学",prio:"A",week:7},
+  {id:"M10",name:"平面図形:円周角・三平方",subj:"数学",prio:"A",week:8},
+  {id:"M11",name:"平面図形:証明",subj:"数学",prio:"B",week:8},
+  {id:"M12",name:"空間図形:直方体",subj:"数学",prio:"B",week:9},
+  {id:"M13",name:"空間図形:円すい",subj:"数学",prio:"B",week:9},
+  {id:"M14",name:"データ:箱ひげ図",subj:"数学",prio:"B",week:8},
+  {id:"M15",name:"データ:代表値・度数分布",subj:"数学",prio:"再現",week:7},
+  {id:"M16",name:"確率",subj:"数学",prio:"再現",week:6},
+  {id:"E1",name:"現在完了",subj:"英語",prio:"A",week:1},
+  {id:"E2",name:"過去進行形",subj:"英語",prio:"A",week:2},
+  {id:"E3",name:"tell+人+to～",subj:"英語",prio:"A",week:3},
+  {id:"E4",name:"長文読解",subj:"英語",prio:"A",week:4},
+  {id:"E5",name:"must not",subj:"英語",prio:"B",week:3},
+  {id:"E6",name:"Whatの感嘆文",subj:"英語",prio:"B",week:4},
+  {id:"E7",name:"関係代名詞who",subj:"英語",prio:"B",week:5},
+  {id:"E8",name:"look forward to+～ing",subj:"英語",prio:"B",week:6},
+  {id:"E9",name:"which+to～",subj:"英語",prio:"B",week:7},
+  {id:"E10",name:"資料読解",subj:"英語",prio:"B",week:8},
+  {id:"E11",name:"受け身・比較",subj:"英語",prio:"診断",week:1},
+  {id:"E12",name:"分詞・間接疑問文",subj:"英語",prio:"診断",week:3},
+  {id:"J1",name:"資料読解・記述",subj:"国語",prio:"A",week:1},
+  {id:"J2",name:"古典:古語・仮名遣い",subj:"国語",prio:"A",week:6},
+  {id:"J3",name:"古典:内容理解",subj:"国語",prio:"A",week:6},
+  {id:"J4",name:"漢字",subj:"国語",prio:"毎日",week:1},
+  {id:"J5",name:"語句・熟語・慣用句",subj:"国語",prio:"毎日",week:1},
+  {id:"J6",name:"文法",subj:"国語",prio:"毎日",week:1},
+  {id:"J7",name:"短歌・俳句",subj:"国語",prio:"診断",week:1},
+  {id:"J8",name:"文学的文章",subj:"国語",prio:"再現",week:8},
+  {id:"S1",name:"湿度・飽和水蒸気量",subj:"理科",prio:"A",week:5},
+  {id:"S2",name:"天体:日周・年周運動",subj:"理科",prio:"A",week:6},
+  {id:"S3",name:"酸化銅の還元",subj:"理科",prio:"A",week:4},
+  {id:"S4",name:"遺伝",subj:"理科",prio:"A",week:6},
+  {id:"S5",name:"前線・天気図・海陸風",subj:"理科",prio:"B",week:7},
+  {id:"S6",name:"地震・断層・褶曲",subj:"理科",prio:"B",week:7},
+  {id:"S7",name:"火山・地層・堆積岩",subj:"理科",prio:"B",week:7},
+  {id:"S8",name:"化学変化と量",subj:"理科",prio:"B",week:8},
+  {id:"S9",name:"密度・状態変化",subj:"理科",prio:"B",week:8},
+  {id:"S10",name:"植物・動物の分類",subj:"理科",prio:"B",week:9},
+  {id:"S11",name:"目・刺激と反応",subj:"理科",prio:"B",week:9},
+  {id:"S12",name:"力の分解・合力",subj:"理科",prio:"B",week:10},
+  {id:"S13",name:"運動とエネルギー",subj:"理科",prio:"B",week:10},
+  {id:"S14",name:"抵抗を含む回路",subj:"理科",prio:"B",week:10},
+  {id:"S15",name:"光・凸レンズ",subj:"理科",prio:"B",week:10},
+  {id:"S16",name:"イオン・電池・酸とアルカリ",subj:"理科",prio:"診断",week:2},
+  {id:"S17",name:"生態系・自然環境",subj:"理科",prio:"診断",week:2},
+  {id:"G1",name:"世界地理:気候帯",subj:"社会",prio:"A",week:3},
+  {id:"G2",name:"アフリカ",subj:"社会",prio:"A",week:4},
+  {id:"G3",name:"アジア",subj:"社会",prio:"A",week:5},
+  {id:"G4",name:"ヨーロッパ",subj:"社会",prio:"A",week:6},
+  {id:"G5",name:"北アメリカ",subj:"社会",prio:"B",week:7},
+  {id:"G6",name:"南アメリカ・オセアニア",subj:"社会",prio:"B",week:8},
+  {id:"G7",name:"世界の姿",subj:"社会",prio:"B",week:9},
+  {id:"G8",name:"資源・産業・貿易・人口",subj:"社会",prio:"B",week:8},
+  {id:"H1",name:"年代の並べ替え(近現代)",subj:"社会",prio:"A",week:7},
+  {id:"H2",name:"明治～大正",subj:"社会",prio:"B",week:10},
+  {id:"H3",name:"1929～1940年",subj:"社会",prio:"B",week:11},
+  {id:"H4",name:"戦後・高度経済成長",subj:"社会",prio:"B",week:11},
+  {id:"C1",name:"憲法・基本的人権",subj:"社会",prio:"B",week:1},
+  {id:"C2",name:"政治:選挙・国会・内閣",subj:"社会",prio:"診断",week:1},
+  {id:"C3",name:"経済:家計・企業・財政",subj:"社会",prio:"診断",week:2},
+  {id:"C4",name:"国際社会・環境・現代社会",subj:"社会",prio:"診断",week:4}
+];
+
+const dailyHabits = [
+  {id:"J4",text:"J4 漢字: 毎日10問を書いて翌日再テスト",badge:"jap"},
+  {id:"J5",text:"J5 語句・熟語・慣用句: 意味→例文の2段階で確認",badge:"jap"},
+  {id:"J6",text:"J6 文法: 品詞分類と文の成分を判別",badge:"jap"}
+];
+
+const week1Tasks = [
+  {id:"J1",text:"J1 資料読解・記述: ①条件に線→②根拠2か所→③型で書く→④確認。週2題",badge:"jap"},
+  {id:"M1",text:"M1 分数の加減: 通分→計算→約分の3段階を式で書く。毎日5問タイムトライ",badge:"math"},
+  {id:"M2",text:"M2 因数分解: 判別手順カード作り。展開で検算",badge:"math"},
+  {id:"E1",text:"E1 現在完了: for/since/ever/never/already/yetと例文で覚え、白紙で英文を書く",badge:"eng"},
+  {id:"E11",text:"E11 受け身・比較(診断): 過去問・模試の該当小問で診断。正答率70%未満ならA/Bへ昇格",badge:"diag"},
+  {id:"J7",text:"J7 短歌・俳句(診断): 季語・切れ字・表現技法を確認",badge:"diag"},
+  {id:"C2",text:"C2 政治(診断): 選挙・国会・内閣・裁判所・地方自治",badge:"diag"}
+];
+
+// ===================== STATE =====================
+let unitState = {};
+let todayDone = {};
+let notifyEnabled = false;
+
+function loadState() {
+  try {
+    const s = localStorage.getItem("patgs27_state");
+    if (s) {
+      const data = JSON.parse(s);
+      unitState = data.unitState || {};
+      todayDone = data.todayDone || {};
+      notifyEnabled = data.notifyEnabled || false;
+    }
+  } catch(e) {}
+  const today = new Date().toDateString();
+  if (todayDone._date !== today) {
+    todayDone = { _date: today };
+  }
+}
+
+function saveState() {
+  localStorage.setItem("patgs27_state", JSON.stringify({
+    unitState, todayDone, notifyEnabled
+  }));
+}
+
+// ===================== COUNTDOWN =====================
+function updateCountdown() {
+  const now = new Date();
+  const diff = examDate - now;
+  if (diff <= 0) {
+    document.getElementById("countdown-days").textContent = "0";
+    document.getElementById("countdown-h").textContent = "0";
+    document.getElementById("countdown-m").textContent = "0";
+    document.getElementById("countdown-s").textContent = "0";
+    return;
+  }
+  const d = Math.floor(diff / (1000*60*60*24));
+  const h = Math.floor((diff / (1000*60*60)) % 24);
+  const m = Math.floor((diff / (1000*60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  document.getElementById("countdown-days").textContent = d;
+  document.getElementById("countdown-h").textContent = h;
+  document.getElementById("countdown-m").textContent = m;
+  document.getElementById("countdown-s").textContent = s;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ===================== PROGRESS =====================
+function countMastered() {
+  return Object.values(unitState).filter(v => v === "習得済み" || v === "昇格不要").length;
+}
+function updateProgress() {
+  const mastered = countMastered();
+  const total = 69;
+  const target = 55;
+  const rate = Math.round((mastered / target) * 100);
+  document.getElementById("status-mastered").textContent = mastered;
+  document.getElementById("status-rate").textContent = rate + "%";
+  document.getElementById("progress-text").textContent = mastered + " / " + target;
+  document.getElementById("progress-fill").style.width = Math.min(rate,100) + "%";
+  // Update weekly plan status display
+  units.forEach(u => {
+    const st = unitState[u.id] || "未着手";
+    const el = document.getElementById("wp-"+u.id);
+    if (el) el.textContent = st;
+  });
+}
+
+// ===================== TODAY'S MENU =====================
+function renderMenu() {
+  const container = document.getElementById("today-menu");
+  container.innerHTML = "";
+  const today = new Date().toDateString();
+  document.getElementById("today-date").textContent = new Date().toLocaleDateString("ja-JP",
+    {month:"long",day:"numeric",weekday:"short"});
+
+  // Daily habits always first
+  dailyHabits.forEach(item => {
+    const li = document.createElement("li");
+    const done = todayDone[item.id] ? "done" : "";
+    li.className = done;
+    li.innerHTML = `<div class="check" onclick="toggleItem('${item.id}')">✓</div>
+      <div class="text">${item.text}</div>
+      <span class="badge badge-${item.badge}">${item.badge==="jap"?"国語":""}</span>`;
+    container.appendChild(li);
+  });
+
+  // Week 1 tasks
+  week1Tasks.forEach(item => {
+    const li = document.createElement("li");
+    const done = todayDone[item.id] ? "done" : "";
+    li.className = done;
+    const badgeMap = {math:"数学",eng:"英語",jap:"国語",sci:"理科",soc:"社会",diag:"診断"};
+    li.innerHTML = `<div class="check" onclick="toggleItem('${item.id}')">✓</div>
+      <div class="text">${item.text}</div>
+      <span class="badge badge-${item.badge}">${badgeMap[item.badge]||item.badge}</span>`;
+    container.appendChild(li);
+  });
+}
+
+function toggleItem(id) {
+  todayDone[id] = !todayDone[id];
+  saveState();
+  renderMenu();
+}
+
+function resetToday() {
+  const today = new Date().toDateString();
+  todayDone = { _date: today };
+  saveState();
+  renderMenu();
+}
+
+function saveProgress() {
+  saveState();
+  updateProgress();
+  renderFullTable();
+  alert("進捗を保存しました。ブラウザのローカルストレージに記録されています。");
+}
+
+// ===================== FULL TABLE =====================
+function renderFullTable() {
+  const tbody = document.querySelector("#full-unit-table tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  units.forEach(u => {
+    const st = unitState[u.id] || "未着手";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.id}</td>
+      <td>${u.name}</td>
+      <td>${u.subj}</td>
+      <td>${u.prio}</td>
+      <td>W${u.week}</td>
+      <td>
+        <select class="status-select" onchange="setUnitState('${u.id}',this.value)">
+          <option value="未着手" ${st==="未着手"?"selected":""}>未着手</option>
+          <option value="未習得" ${st==="未習得"?"selected":""}>未習得</option>
+          <option value="要復習" ${st==="要復習"?"selected":""}>要復習</option>
+          <option value="再現確認中" ${st==="再現確認中"?"selected":""}>再現確認中</option>
+          <option value="習得済み" ${st==="習得済み"?"selected":""}>習得済み</option>
+          <option value="昇格不要" ${st==="昇格不要"?"selected":""}>昇格不要</option>
+        </select>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setUnitState(id, state) {
+  unitState[id] = state;
+  saveState();
+  updateProgress();
+}
+
+// ===================== COLLAPSE =====================
+function toggleCollapse(id) {
+  const el = document.getElementById(id);
+  const icon = document.getElementById("unit-toggle-icon");
+  if (el.classList.contains("open")) {
+    el.classList.remove("open");
+    icon.textContent = "▼";
+  } else {
+    el.classList.add("open");
+    icon.textContent = "▲";
+  }
+}
+
+// ===================== NOTIFICATION =====================
+function toggleNotify() {
+  if (!("Notification" in window)) {
+    alert("このブラウザは通知に対応していません。");
+    return;
+  }
+  if (Notification.permission === "granted") {
+    notifyEnabled = true;
+    updateNotifyUI();
+    saveState();
+    scheduleHourly();
+    return;
+  }
+  Notification.requestPermission().then(permission => {
+    if (permission === "granted") {
+      notifyEnabled = true;
+      updateNotifyUI();
+      saveState();
+      scheduleHourly();
+      new Notification("港北合格コマンドセンター", {
+        body: "毎時通知を開始しました。頑張れ！",
+        icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect fill='%23f59e0b' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' font-size='28' text-anchor='middle' fill='%230f172a' font-weight='bold'%3E港%3C/text%3E%3C/svg%3E"
+      });
+    } else {
+      notifyEnabled = false;
+      updateNotifyUI();
+      saveState();
+    }
+  });
+}
+
+function updateNotifyUI() {
+  const bar = document.getElementById("notify-bar");
+  const btn = document.getElementById("notify-btn");
+  const status = document.getElementById("notify-status");
+  if (notifyEnabled && Notification.permission === "granted") {
+    bar.classList.add("enabled");
+    btn.textContent = "通知ON";
+    btn.classList.remove("btn-primary");
+    btn.classList.add("btn-secondary");
+    status.textContent = "毎時0分に通知します";
+  } else {
+    bar.classList.remove("enabled");
+    btn.textContent = "通知を許可する";
+    btn.classList.remove("btn-secondary");
+    btn.classList.add("btn-primary");
+    status.textContent = "未許可";
+  }
+}
+
+function scheduleHourly() {
+  if (!notifyEnabled) return;
+  const now = new Date();
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, 0, 0);
+  const delay = next - now;
+  setTimeout(() => {
+    sendHourlyNotify();
+    setInterval(sendHourlyNotify, 60*60*1000);
+  }, delay);
+}
+
+function sendHourlyNotify() {
+  if (!notifyEnabled || Notification.permission !== "granted") return;
+  const undone = week1Tasks.filter(t => !todayDone[t.id]).map(t => t.text.split(":")[0]);
+  const habitsUndone = dailyHabits.filter(h => !todayDone[h.id]).map(h => h.text.split(":")[0]);
+  let body = "";
+  if (habitsUndone.length > 0) {
+    body += "【毎日】" + habitsUndone.join("、") + " ";
+  }
+  if (undone.length > 0) {
+    body += "【今週】" + undone.slice(0,3).join("、");
+    if (undone.length > 3) body += " 他";
+  }
+  if (!body) body = "今日のメニューは全て完了！お疲れ様。";
+  new Notification("港北合格コマンドセンター", {
+    body: body,
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect fill='%23f59e0b' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' font-size='28' text-anchor='middle' fill='%230f172a' font-weight='bold'%3E港%3C/text%3E%3C/svg%3E"
+  });
+}
+
+// ===================== INIT =====================
+loadState();
+updateProgress();
+renderMenu();
+renderFullTable();
+updateNotifyUI();
+if (notifyEnabled) scheduleHourly();
+</script>
+</body>
+</html>
